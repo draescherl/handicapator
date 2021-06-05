@@ -46,8 +46,15 @@ class Game:
         for i in range(len(indexes_to_remove) - 1, -1, -1):
             self.pairs.remove(self.pairs[indexes_to_remove[i]])
 
-    # def __remove_duplicates(self):
-
+    def __remove_duplicates(self):
+        diffs = []
+        length = len(self.pairs)
+        for i in range(length - 1):
+            index = i - len(diffs)
+            if diffs.count(self.pairs[index][4]) > 0:
+                self.pairs.pop(index)
+            else:
+                diffs.append(self.pairs[index][4])
 
     def __nice_print(self):
         self.pairs.sort(key=lambda x: x[4])
@@ -60,6 +67,7 @@ class Game:
         self.__make_pairs()
         self.__append_handicap_to_list()
         self.__remove_unbalanced_matchups()
+        self.__remove_duplicates()
         self.__nice_print()
 
 
